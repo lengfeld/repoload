@@ -71,13 +71,20 @@ For further information see:
 
 ## Installation
 
-The python script `repoload.py` is self contained.  Just drop the file
-in a folder that your environment variable `PATH` references.
+The installation of `repoload` is possible over PyPI or by directly using the
+python script.
+
+PyPI:
+
+    $ python3 -m pip install --user repoload
+
+To manually install the self contained `repoload.py` python script. Just drop
+the file in a folder that your environment variable `PATH` references.
 
 Example:
 
     $ mkdir -p ~/bin
-    $ cp repoload.py ~/bin/repoload
+    $ cp repoload/repoload.py ~/bin/repoload
     $ echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
     $ chmod +x ~/bin/repoload  # ensure that the script is executeable
 
@@ -95,6 +102,23 @@ After that the command
     $ repoload changes
 
 should print a list of open change requests.
+
+
+## Create and publish a release
+
+To create a release of repoload additional packaging dependency's are needed:
+
+    $ python3 -m pip install --user --upgrade twine setuptools wheel
+
+Next the release which is described in the setup.py file gets packaged.
+The version number is taken from the repoload/repoload.py `__VERSION__` string.
+
+    $ python3 setup.py sdist bdist_wheel
+
+As final step the release can be uploaded to PyPI.
+See the PyPI documentation on how to configure the credentials for twine.
+
+    $ python3 -m twine upload dist/*
 
 
 ## License

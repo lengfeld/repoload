@@ -14,7 +14,7 @@ import sys
 import json
 import os
 
-__VERSION__ = "0.1"
+__VERSION__ = "0.1.1"
 
 # TODO Get this url from the manifest repo at the path '.repo/manifests.git/'.
 # This will mostly be the correct gerrit server url. Overwriting by a
