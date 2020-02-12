@@ -88,20 +88,19 @@ Example:
     $ echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
     $ chmod +x ~/bin/repoload  # ensure that the script is executeable
 
-After that the command `repoload` should be available in a newly started shell.
-
-Now you have to configure the gerrit URL of your workplace's gerrit server. It
-must support ssh access. The script uses the environment variable `GERRIT_URL`.
-
-Example:
-
-    $ echo 'export GERRIT_URL=gerrit.my.corp.com' >> ~/.bashrc
-
-After that the command
+After that the command `repoload` should be available in a newly started shell
+and the command
 
     $ repoload changes
 
 should print a list of open change requests.
+
+Repoload looks for the manifest repository configuration file to determine the
+URL of the Gerrit server. It works automatically if the current working
+directory is below a `repo` checkout. Alternatively, the environment variable
+`ANDROID_BUILD_TOP` can be set to the directory where a `repo` checkout is
+located. Finally, the URL can be set directly via the environment variable
+`GERRIT_URL`.
 
 
 ## Create and publish a release

@@ -9,6 +9,7 @@ Query gerrit and download a selected CR or crossrepo topic with repo.
 """
 
 import argparse
+import configparser
 import subprocess
 import sys
 import json
@@ -16,21 +17,57 @@ import os
 
 __VERSION__ = "0.1.1"
 
-# TODO Get this url from the manifest repo at the path '.repo/manifests.git/'.
-# This will mostly be the correct gerrit server url. Overwriting by a
-# enviornment variable should be only the fallback.
-# TODO if a environment variable is used, allow some sort of directory
-# selection.  Maybe the user has multiple repo checkouts from different gerrit
-# servers.
-try:
-    URL = os.environ['GERRIT_URL']
-except KeyError:
-    print("Set environment variable GERRIT_URL.", file=sys.stderr)
-    sys.exit(1)
-
 
 # Global Flags
 DEBUG = False
+
+MANIFEST_REPO_CFG = '.repo/manifests.git/config'
+
+
+def fatal(msg):
+    print(msg, file=sys.stderr)
+    sys.exit(1)
+
+
+def get_gerrit_url():
+    try:
+        return os.environ['GERRIT_URL']
+    except KeyError:
+        pass
+
+    # Search up in the tree to find the .repo directory.
+    # Usually, it is contained in the environment variable ANDROID_BUILD_TOP,
+    # but that might not be set.
+    cfg_path = ''
+    try:
+        cfg_path = os.path.join(os.environ['ANDROID_BUILD_TOP'],
+                                MANIFEST_REPO_CFG)
+    except KeyError:
+        d = os.getcwd()
+        cfg_path = os.path.join(d, MANIFEST_REPO_CFG)
+        found = os.path.isfile(cfg_path)
+        while not found and d != '/':
+            d = os.path.normpath(os.path.join(d, '..'))
+            cfg_path = os.path.join(d, MANIFEST_REPO_CFG)
+            found = os.path.isfile(cfg_path)
+        if not found:
+            fatal('Directory ".repo" not found in this or any parent ' +
+                  'directory. Not a repo checkout.')
+
+    config = configparser.ConfigParser()
+    r = config.read(cfg_path)
+    if len(r) == 0:
+        fatal('Failed to open config file "{}"'.format(cfg_path))
+    try:
+        repourl = config['remote "origin"']['url']
+    except KeyError:
+        fatal('Invalid configuration file format "{}"'.format(cfg_path))
+    baseurl = repourl.split('//')[1].split('/')[0]
+
+    return baseurl
+
+
+URL = get_gerrit_url()
 
 
 # Gerrit documentation
