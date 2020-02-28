@@ -124,3 +124,16 @@ See the PyPI documentation on how to configure the credentials for twine.
 
 The code is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 See the file `COPYING`.
+
+
+## Contribution
+
+The project is open for contribution. Open a github pull request or send a
+patch via email. If you take the patch route, you can find our mail addresses
+in the git history easily.
+
+Please add a `Signed-off-by` tag in the commit/patch message to state the
+copyright ownership and license information of your patch. Read [Developer
+Certificate of Origin v1.1](https://developercertificate.org/) to understand
+the meaning and obligations your are taking by adding your sign-off. Thanks in
+advance.
