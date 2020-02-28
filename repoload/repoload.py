@@ -15,7 +15,7 @@ import sys
 import json
 import os
 
-__VERSION__ = "0.1.1"
+__VERSION__ = "0.2"
 
 
 # Global Flags
