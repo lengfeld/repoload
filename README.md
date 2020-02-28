@@ -103,23 +103,6 @@ located. Finally, the URL can be set directly via the environment variable
 `GERRIT_URL`.
 
 
-## Create and publish a release
-
-To create a release of repoload additional packaging dependency's are needed:
-
-    $ python3 -m pip install --user --upgrade twine setuptools wheel
-
-Next the release which is described in the setup.py file gets packaged.
-The version number is taken from the repoload/repoload.py `__VERSION__` string.
-
-    $ python3 setup.py sdist bdist_wheel
-
-As final step the release can be uploaded to PyPI.
-See the PyPI documentation on how to configure the credentials for twine.
-
-    $ python3 -m twine upload dist/*
-
-
 ## License
 
 The code is licensed under the [MIT License](https://opensource.org/licenses/MIT).
@@ -137,3 +120,20 @@ copyright ownership and license information of your patch. Read [Developer
 Certificate of Origin v1.1](https://developercertificate.org/) to understand
 the meaning and obligations your are taking by adding your sign-off. Thanks in
 advance.
+
+
+## Create and publish a release
+
+To create a release of repoload additional packaging dependency's are needed:
+
+    $ python3 -m pip install --user --upgrade twine setuptools wheel
+
+Next the release which is described in the setup.py file gets packaged.
+The version number is taken from the repoload/repoload.py `__VERSION__` string.
+
+    $ python3 setup.py sdist bdist_wheel
+
+As final step the release can be uploaded to PyPI.
+See the PyPI documentation on how to configure the credentials for twine.
+
+    $ python3 -m twine upload dist/*
