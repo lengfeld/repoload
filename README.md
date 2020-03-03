@@ -44,15 +44,15 @@ Example:
      # Query the gerrit server for open CRs
      # You can use `grep` to filter for your coworker's CRs
      $ repoload changes | grep -i john
-     123: Add feature A (Jon Doe <john.doe@my.corp.com>) [topic: crossrepo/feature-a]
+     123: Add feature A (John Doe <john.doe@my.corp.com>) [topic: crossrepo/feature-a]
      128: Update library for feature A (John Doe <john.doe@my.corp.com>) [topic: crossrepo/feature-a]
      [...]
 
      # For downloading all CRs linked by a topic, just use the topic name
-     $ repload download crossrepo/feature-a
+     $ repoload download crossrepo/feature-a
 
      # For downloading only a single CR, use the CR number
-     $ repload download 123
+     $ repoload download 123
 
      # Build, test and have fun.
 
