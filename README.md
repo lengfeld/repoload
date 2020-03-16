@@ -103,6 +103,31 @@ located. Finally, the URL can be set directly via the environment variable
 `GERRIT_URL`.
 
 
+## FAQ - Frequently Asked Questions
+
+### Non-UTF8 locale
+
+If you execute `repoload` with a non UTF8 locale, the program may abort with a
+python `UnicodeEncodeError` exception. Example:
+
+    $ LC_ALL=C repoload c
+    [...]
+    Traceback (most recent call last):
+      File "/home/johndoe/.local/bin/repoload", line 11, in <module>
+        sys.exit(main())
+      File "/home/johndoe/.local/lib/python3.6/site-packages/repoload/repoload.py", line 252, in main
+        ret = args.func(args)
+      File "/home/johndoe/.local/lib/python3.6/site-packages/repoload/repoload.py", line 122, in print_open_changes
+        print("%d: %s (%s)%s" % (cr.get('number'), cr.get('subject'), author, topic_str))
+    UnicodeEncodeError: 'ascii' codec can't encode character '\xe4' in position 70: ordinal not in range(128)
+
+The reason are non-ASCII characters, e.g. in the author or topic field, that
+cannot be printed to the terminal, if the locale is non-UTF8. The current workaround
+is to *not* use repoload with non-UTF8 character sets.
+
+It's planned to fix this issue in the next version of repoload.
+
+
 ## License
 
 The code is licensed under the [MIT License](https://opensource.org/licenses/MIT).
